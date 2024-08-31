@@ -13,7 +13,6 @@ import java.util.Map;
  * Library responsible for manage the loans and the users.
  */
 public class Library {
-
     private final List<User> users;
     private final Map<Book, Integer> books;
     private final List<Loan> loans;
