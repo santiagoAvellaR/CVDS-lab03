@@ -35,7 +35,17 @@ public class Library {
      */
     public boolean addBook(Book book) {
         //TODO Implement the logic to add a new book into the map.
-        return false;
+        if(book == null)
+        {
+            return false;
+        }
+        if(books.containsKey(book)){
+            Integer newValue = books.get(book) + 1;
+            books.put(book, newValue);
+            return true;
+        }
+        books.put(book, 1);
+        return true;
     }
 
     /**
@@ -53,7 +63,40 @@ public class Library {
      */
     public Loan loanABook(String userId, String isbn) {
         //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
+        // verify user existance
+        User user = null;
+        for (User u : users){
+            if (user.getId().equals(userId)){
+                user = u;
+            }
+        }
+        if (user == null){
+            return null;
+        }
+
+        // verify book existance
+        Book book = null;
+        for(Book b : books.keySet()){
+            if (book.equals(isbn)){
+                book = b;
+                break;
+            }
+        }
+        if (book == null){
+            return null;
+        }
+
+        for (Loan l : loans){
+            User lOwner = l.getUser();
+            if (lOwner.getId().equals(userId) && l.getBook().equals(book)){
+                return null;
+            }
+        }
+
+        if (books.get(book)<=0){
+            return null;
+        }
+
     }
 
     /**
