@@ -28,4 +28,19 @@ public class TestLibrary {
         assertTrue(library.addBook(book));
 
     }
+    @Test
+    void ShouldNotAddTwoDifferentlyTitledBooksWithTheSameID(){
+        Book book = new Book("El amor en los tiempos del cólera", " Gabriel García Márquez","1-412-142d");
+        Book book1 = new Book("Cien años de soledad", " Gabriel García Márquez","1-412-142d");
+        library.addBook(book);
+        assertFalse(library.addBook(book1));
+    }
+    @Test
+    void ShouldNotAddTwoBooksFromDifferentAuthorsWithTheSameID(){
+        Book book = new Book("Matematicas para ingenieros", "Pedro Sanchez","1-412-114d");
+        Book book1 = new Book("Matematicas para ingenieros", "Oscar Rodriguez","1-412-114d");
+        library.addBook(book);
+        assertFalse(library.addBook(book1));
+    }
+
 }
