@@ -39,6 +39,12 @@ public class Library {
         {
             return false;
         }
+        for(Book b : books.keySet()){
+            if (book.equals(b) && (!(book.getTittle().equals(b.getTittle())) || !(book.getAuthor().equals(b.getAuthor())))){
+                return false;
+            }
+        }
+
         if(books.containsKey(book)){
             Integer newValue = books.get(book) + 1;
             books.put(book, newValue);
@@ -46,8 +52,8 @@ public class Library {
         }
         books.put(book, 1);
         return true;
-    }
 
+    }
     /**
      * This method creates a new loan with for the User identify by the userId and the book identify by the isbn,
      * the loan should be store in the list of loans, to successfully create a loan is required to validate that the
