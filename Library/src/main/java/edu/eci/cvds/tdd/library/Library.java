@@ -114,7 +114,7 @@ public class Library {
         return false;
     }
 
-    private Integer availableBooks(Book book) {
+    public Integer availableBooks(Book book) {
         if (books.containsKey(book)){
             return books.get(book);
         }
