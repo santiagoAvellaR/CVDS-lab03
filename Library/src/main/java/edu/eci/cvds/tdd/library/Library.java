@@ -70,39 +70,80 @@ public class Library {
     public Loan loanABook(String userId, String isbn) {
         //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
         // verify user existance
+        User user = searchUser(userId);
+        if (user == null){return null;}
+        Book book = searchBook(isbn);
+        if (book == null){return null;}
+        if (userHasALoanOfBook(userId, book)){return null;}
+        if (availableBooks(book)<=0){return null;}
+        books.put(book, books.get(book) - 1);
+        Loan loan = new Loan(book, user);
+        loans.add(loan);
+        return loan;
+    }
+
+    /**
+     * Searches for a user in the list of users by their user ID.
+     *
+     * @param userId The ID of the user to search for.
+     * @return The user object if found; null otherwise.
+     */
+    private User searchUser(String userId) {
         User user = null;
-        for (User u : users){
-            if (user.getId().equals(userId)){
+        for (User u : users) {
+            if (u.getId().equals(userId)) {
                 user = u;
+                break;
             }
         }
-        if (user == null){
-            return null;
-        }
+        return user;
+    }
 
-        // verify book existance
+    /**
+     * Searches for a book in the collection of books by its ISBN.
+     *
+     * @param isbn The ISBN of the book to search for.
+     * @return The book object if found; null otherwise.
+     */
+    private Book searchBook(String isbn) {
         Book book = null;
-        for(Book b : books.keySet()){
-            if (book.equals(isbn)){
+        for (Book b : books.keySet()) {
+            if (b.getIsbn().equals(isbn)) {
                 book = b;
                 break;
             }
         }
-        if (book == null){
-            return null;
-        }
+        return book;
+    }
 
-        for (Loan l : loans){
+    /**
+     * Checks if a user already has a loan for a specific book.
+     *
+     * @param userId The ID of the user.
+     * @param book   The book to check for an existing loan.
+     * @return True if the user already has a loan for the book; false otherwise.
+     */
+    private boolean userHasALoanOfBook(String userId, Book book) {
+        for (Loan l : loans) {
             User lOwner = l.getUser();
-            if (lOwner.getId().equals(userId) && l.getBook().equals(book)){
-                return null;
+            if (lOwner.getId().equals(userId) && l.getBook().equals(book)) {
+                return true;
             }
         }
+        return false;
+    }
 
-        if (books.get(book)<=0){
-            return null;
+    /**
+     * Gets the number of available copies of a specific book.
+     *
+     * @param book The book to check for available copies.
+     * @return The number of available copies of the book; 0 if the book is not in the collection.
+     */
+    private Integer availableBooks(Book book) {
+        if (books.containsKey(book)) {
+            return books.get(book);
         }
-
+        return 0;
     }
 
     /**
