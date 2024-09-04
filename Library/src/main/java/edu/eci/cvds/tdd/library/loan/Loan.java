@@ -12,11 +12,11 @@ public class Loan {
     private LoanStatus status;
     private LocalDateTime returnDate;
 
-    public Loan(Book book, User user) {
+    Loan(Book book, User user, LocalDateTime loanDate) {
         this.book = book;
         this.user = user;
-        this.loanDate = LocalDateTime.now();
-        this.status = LoanStatus.ACTIVE;
+        this.loanDate = loanDate;
+        status = LoanStatus.ACTIVE;
     }
 
     public Book getBook() {

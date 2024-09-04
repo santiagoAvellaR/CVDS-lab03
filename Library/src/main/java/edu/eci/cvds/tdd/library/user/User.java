@@ -4,10 +4,6 @@ public class User {
     private String name;
     private String id;
 
-    public User(String name, String id) {
-        this.name = name;
-        this.id = id;
-    }
     public String getName() {
         return name;
     }
@@ -22,13 +18,5 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof User)){
-           return false;
-        }
-        return id.equals(((User) o).getId());
     }
 }
