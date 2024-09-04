@@ -1,6 +1,7 @@
 package edu.eci.cvds.tdd.library;
 
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,7 @@ public class TestLibrary {
     void shouldNotCreateALoanForANonExistentUser(){
         assertNull(library.loanABook("123456789", "123-123-123-1"));
     }
+
     @Test
     void shouldNotCreateALoanForAnUnavailableBook(){
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -70,6 +72,7 @@ public class TestLibrary {
         assertNull(library.loanABook("9876543210", "1-143-456f"));
 
     }
+
     @Test
     void shouldNotCreateALoanForABookThatUserAlreadyLoaned(){
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -79,6 +82,7 @@ public class TestLibrary {
         library.loanABook("1234567890", "1-143-456f");
         assertNull(library.loanABook("1234567890", "1-143-456f"));
     }
+
     @Test
     void shouldCreateALoan(){
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -86,5 +90,48 @@ public class TestLibrary {
         User user1 = new User("Daniel Fernando Aldana Bueno", "1234567890");
         library.addUser(user1);
         assertNotNull(library.loanABook("1234567890", "1-143-456f"));
+    }
+
+    @Test
+    void shouldReturnLoan() {
+        Book book = new Book("Español", "Rosa","1-143-456f");
+        library.addBook(book);
+        User user1 = new User("Daniel Fernando Aldana Bueno", "1234567890");
+        library.addUser(user1);
+        Loan loan = library.loanABook("1234567890", "1-143-456f");
+        assertNotNull(library.returnLoan(loan));
+    }
+    @Test
+    void shouldReturnNull() {
+        Book book = new Book( "El amor en los tiempos del cólera",  "Gabriel García Márquez", "1-412-142d");
+        library.addBook(book);
+        User user1 = new User( "Santiago Avellaneda Rodríguez",  "1234567890");
+        library.addUser(user1);
+        Loan loan = library.loanABook(  "1234567890", "1-143-456f");
+        assertNull(library.returnLoan(loan));
+    }
+
+    @Test
+    void shouldReturnLoanStatusReturned() {
+        Book book = new Book( "El amor en los tiempos del cólera",  "Gabriel García Márquez",  "1-412-142d");
+        library.addBook(book);
+        User user1 = new User("Santiago Avellaneda Rodríguez",  "1234567890");
+        library.addUser(user1);
+        Loan loan = library.loanABook(  "1234567890",  "1-143-456f");
+        library.returnLoan(loan);
+        assertEquals(loan.getStatus(), LoanStatus.RETURNED);
+    }
+
+    @Test
+    void shouldIncreaseTheNumberOfBooks() {
+        Book book = new Book("Matemáticas para ingenieros", "Pedro Sanchez",  "1-412-114d");
+        library.addBook(book);
+        library.addBook(book);
+        User user1 = new User(  "Santiago Avellaneda Rodríguez",  "1234567890");
+        library.addUser(user1);
+        Loan loan = library.loanABook(  "1234567890", "1-412-114d");
+        assertEquals(library.availableBooks(book),  1);
+        library.returnLoan(loan);
+        assertEquals(library.availableBooks(book),  2);
     }
 }

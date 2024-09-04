@@ -133,14 +133,16 @@ public class Library {
         return false;
     }
 
+
     /**
      * Gets the number of available copies of a specific book.
      *
      * @param book The book to check for available copies.
      * @return The number of available copies of the book; 0 if the book is not in the collection.
      */
-    private Integer availableBooks(Book book) {
-        if (books.containsKey(book)) {
+
+    public Integer availableBooks(Book book) {
+        if (books.containsKey(book)){
             return books.get(book);
         }
         return 0;
