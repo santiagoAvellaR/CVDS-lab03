@@ -117,7 +117,7 @@ public class TestLibrary {
         library.addBook(book);
         User user1 = new User("Santiago Avellaneda Rodríguez",  "1234567890");
         library.addUser(user1);
-        Loan loan = library.loanABook(  "1234567890",  "1-143-456f");
+        Loan loan = library.loanABook(  "1234567890",  "1-412-142d");
         library.returnLoan(loan);
         assertEquals(loan.getStatus(), LoanStatus.RETURNED);
     }
