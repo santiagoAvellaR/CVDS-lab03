@@ -367,7 +367,7 @@ Explore los links del reporte en el cual le muestra que partes del código tiene
 
 ![imagen](https://github.com/santiagoAvellaR/CVDS-lab03/blob/development/images/cobertura.PNG)
 
-![imagen](https://github.com/santiagoAvellaR/CVDS-lab03/blob/development/images/cobertura.jpeg)
+![imagen](https://github.com/santiagoAvellaR/CVDS-lab03/blob/development/images/verify.jpeg)
 
 ### SONARQUBE
 Ahora es necesario hacer el análisis estático del código usando SonarQube, para lo cual necesitamos tener Docker.
