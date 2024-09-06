@@ -35,7 +35,6 @@ public class Library {
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //TODO Implement the logic to add a new book into the map.
         if (book == null) {
             return false;
         }
