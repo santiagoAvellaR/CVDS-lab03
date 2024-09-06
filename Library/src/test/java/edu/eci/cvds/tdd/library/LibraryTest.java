@@ -3,14 +3,19 @@ package edu.eci.cvds.tdd.library;
 import edu.eci.cvds.tdd.library.loan.Loan;
 import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import edu.eci.cvds.tdd.library.Library;
 import edu.eci.cvds.tdd.library.book.Book;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class TestLibrary {
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class LibraryTest {
     private Library library = new Library();
 
     @BeforeEach
@@ -59,7 +64,6 @@ public class TestLibrary {
     void shouldNotCreateALoanForANonExistentUser(){
         assertNull(library.loanABook("123456789", "123-123-123-1"));
     }
-
     @Test
     void shouldNotCreateALoanForAnUnavailableBook(){
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -70,9 +74,7 @@ public class TestLibrary {
         library.addUser(user2);
         library.loanABook("1234567890", "1-143-456f");
         assertNull(library.loanABook("9876543210", "1-143-456f"));
-
     }
-
     @Test
     void shouldNotCreateALoanForABookThatUserAlreadyLoaned(){
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -82,7 +84,6 @@ public class TestLibrary {
         library.loanABook("1234567890", "1-143-456f");
         assertNull(library.loanABook("1234567890", "1-143-456f"));
     }
-
     @Test
     void shouldCreateALoan(){
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -92,6 +93,7 @@ public class TestLibrary {
         assertNotNull(library.loanABook("1234567890", "1-143-456f"));
     }
 
+    // returnLoan Tests
     @Test
     void shouldReturnLoan() {
         Book book = new Book("Español", "Rosa","1-143-456f");
@@ -121,7 +123,6 @@ public class TestLibrary {
         library.returnLoan(loan);
         assertEquals(loan.getStatus(), LoanStatus.RETURNED);
     }
-
     @Test
     void shouldIncreaseTheNumberOfBooks() {
         Book book = new Book("Matemáticas para ingenieros", "Pedro Sanchez",  "1-412-114d");

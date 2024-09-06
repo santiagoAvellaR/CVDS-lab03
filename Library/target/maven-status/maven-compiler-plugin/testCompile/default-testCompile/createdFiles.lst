@@ -1,1 +1,5 @@
 edu\eci\cvds\tdd\AppTest.class
+edu\eci\cvds\tdd\library\book\TestBook.class
+edu\eci\cvds\tdd\library\LibraryTest.class
+edu\eci\cvds\tdd\library\loan\TestLoan.class
+edu\eci\cvds\tdd\library\user\TestUser.class
