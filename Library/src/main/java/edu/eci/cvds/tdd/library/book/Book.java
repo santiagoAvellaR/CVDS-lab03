@@ -25,6 +25,9 @@ public class Book {
 
     @Override
     public boolean equals(Object obj) {
-        return isbn.equals(((Book)obj).isbn);
+        if (!(obj instanceof Book)){
+            return false;
+        }
+        return isbn.equals(((Book)obj).getIsbn());
     }
 }

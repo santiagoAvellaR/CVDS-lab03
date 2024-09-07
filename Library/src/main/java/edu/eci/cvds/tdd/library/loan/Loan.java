@@ -58,4 +58,12 @@ public class Loan {
     public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Loan)) {
+            return false;
+        }
+        return user.equals(((Loan) o).getUser()) && book.equals(((Loan) o).getBook()) && loanDate.equals(((Loan) o).getLoanDate());
+    }
 }

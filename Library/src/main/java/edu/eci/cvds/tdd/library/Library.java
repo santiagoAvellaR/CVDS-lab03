@@ -2,8 +2,10 @@ package edu.eci.cvds.tdd.library;
 
 import edu.eci.cvds.tdd.library.book.Book;
 import edu.eci.cvds.tdd.library.loan.Loan;
+import edu.eci.cvds.tdd.library.loan.LoanStatus;
 import edu.eci.cvds.tdd.library.user.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,22 +32,19 @@ public class Library {
      * operation is successful false otherwise.
      *
      * @param book The book to store in the map.
-     *
      * @return true if the book was stored false otherwise.
      */
     public boolean addBook(Book book) {
-        //TODO Implement the logic to add a new book into the map.
-        if(book == null)
-        {
+        if (book == null) {
             return false;
         }
-        for(Book b : books.keySet()){
-            if (book.equals(b) && (!(book.getTittle().equals(b.getTittle())) || !(book.getAuthor().equals(b.getAuthor())))){
+        for (Book b : books.keySet()) {
+            if (book.equals(b) && (!(book.getTittle().equals(b.getTittle())) || !(book.getAuthor().equals(b.getAuthor())))) {
                 return false;
             }
         }
 
-        if(books.containsKey(book)){
+        if (books.containsKey(book)) {
             Integer newValue = books.get(book) + 1;
             books.put(book, newValue);
             return true;
@@ -54,6 +53,7 @@ public class Library {
         return true;
 
     }
+
     /**
      * This method creates a new loan with for the User identify by the userId and the book identify by the isbn,
      * the loan should be store in the list of loans, to successfully create a loan is required to validate that the
@@ -63,19 +63,24 @@ public class Library {
      * the loan date should be the current date.
      *
      * @param userId id of the user.
-     * @param isbn book identification.
-     *
+     * @param isbn   book identification.
      * @return The new created loan.
      */
     public Loan loanABook(String userId, String isbn) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        // verify user existance
         User user = searchUser(userId);
-        if (user == null){return null;}
+        if (user == null) {
+            return null;
+        }
         Book book = searchBook(isbn);
-        if (book == null){return null;}
-        if (userHasALoanOfBook(userId, book)){return null;}
-        if (availableBooks(book)<=0){return null;}
+        if (book == null) {
+            return null;
+        }
+        if (userHasALoanOfBook(userId, book)) {
+            return null;
+        }
+        if (availableBooks(book) <= 0) {
+            return null;
+        }
         books.put(book, books.get(book) - 1);
         Loan loan = new Loan(book, user);
         loans.add(loan);
@@ -133,13 +138,15 @@ public class Library {
         return false;
     }
 
+
     /**
      * Gets the number of available copies of a specific book.
      *
      * @param book The book to check for available copies.
      * @return The number of available copies of the book; 0 if the book is not in the collection.
      */
-    private Integer availableBooks(Book book) {
+
+    public Integer availableBooks(Book book) {
         if (books.containsKey(book)) {
             return books.get(book);
         }
@@ -152,12 +159,27 @@ public class Library {
      * date should be the current date, validate that the loan exist.
      *
      * @param loan loan to return.
-     *
      * @return the loan with the RETURNED status.
      */
     public Loan returnLoan(Loan loan) {
-        //TODO Implement the login of loan a book to a user based on the UserId and the isbn.
-        return null;
+        Loan returnLoan = searchLoan(loan);
+        if (returnLoan == null){return null;}
+        returnLoan.setStatus(LoanStatus.RETURNED);
+        returnLoan.setReturnDate(LocalDateTime.now());
+        Book book = returnLoan.getBook();
+        books.put(book, books.get(book) + 1);
+        return returnLoan;
+    }
+
+    private Loan searchLoan(Loan loan) {
+        Loan returnLoan = null;
+        for (Loan l : loans) {
+            if (loan.equals(l)){
+                returnLoan = l;
+                break;
+            }
+        }
+        return returnLoan;
     }
 
     public boolean addUser(User user) {
